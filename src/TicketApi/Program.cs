@@ -52,18 +52,23 @@ builder.Services.AddRateLimiter(o =>
         _ => new FixedWindowRateLimiterOptions { PermitLimit = loginsPerMinute, Window = TimeSpan.FromMinutes(1) }));
 });
 builder.Services.AddProblemDetails();
-builder.Services.AddOpenApi(o => o.AddDocumentTransformer((document, _, _) =>
+builder.Services.AddOpenApi(o =>
 {
-    document.Components ??= new OpenApiComponents();
-    document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
-    document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+    // OpenAPI 3.0: the version ZAP's importer handles most reliably.
+    o.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
+    o.AddDocumentTransformer((document, _, _) =>
     {
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-    };
-    return Task.CompletedTask;
-}));
+        document.Components ??= new OpenApiComponents();
+        document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+        document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+        };
+        return Task.CompletedTask;
+    });
+});
 builder.WebHost.ConfigureKestrel(o =>
 {
     o.AddServerHeader = false;
