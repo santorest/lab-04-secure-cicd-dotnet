@@ -16,8 +16,10 @@ public static class TicketEndpoints
         group.MapGet("/", ListAsync);
         group.MapPost("/", CreateAsync);
         group.MapGet("/{id:int}", GetAsync);
+#pragma warning disable EF1003 // demo: a developer silences the compiler warning
         group.MapGet("/search", async (string q, AppDbContext db) =>
             await db.Tickets.FromSqlRaw("SELECT * FROM Tickets WHERE Title LIKE '%" + q + "%'").ToListAsync());
+#pragma warning restore EF1003
         group.MapPatch("/{id:int}/status", ChangeStatusAsync).RequireAuthorization(p => p.RequireRole(Roles.Agent));
         return app;
     }
