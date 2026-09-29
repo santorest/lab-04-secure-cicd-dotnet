@@ -1,0 +1,2 @@
+# Trivy ignores: every id needs a row in security/EXCEPTIONS.md.
+vulnerabilities: []
