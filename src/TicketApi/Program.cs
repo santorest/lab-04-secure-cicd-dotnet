@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TicketApi.Auth;
 using TicketApi.Data;
+using TicketApi.Tickets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,7 @@ app.UseAuthorization();
 app.UseRateLimiter();
 
 app.MapAuthEndpoints();
+app.MapTicketEndpoints();
 
 await app.RunAsync();
 
