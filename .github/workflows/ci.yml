@@ -25,3 +25,59 @@ jobs:
       - run: dotnet restore
       - run: dotnet build --no-restore -warnaserror
       - run: dotnet test --no-build --logger "trx;LogFileName=results.trx"
+
+  container:
+    needs: build-test
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build image
+        run: docker build -t ticketapi:ci .
+      - name: Smoke test (read-only root filesystem, only /data writable)
+        run: |
+          docker run -d --name api --read-only --tmpfs /tmp -v apidata:/data -p 8080:8080 \
+            -e Jwt__SigningKey="$(openssl rand -base64 32)" ticketapi:ci
+          for _ in $(seq 1 30); do curl -fsS http://localhost:8080/health && break; sleep 1; done
+          curl -fsS http://localhost:8080/health
+          headers=$(curl -sSI http://localhost:8080/health)
+          echo "$headers"
+          if echo "$headers" | grep -qi '^server:'; then echo "Server header must not be sent"; exit 1; fi
+          echo "$headers" | grep -qi "^content-security-policy: default-src 'none'"
+      - name: Show logs on failure
+        if: failure()
+        run: docker logs api || true
+      - name: Trivy (gate: fixable High/Critical)
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ticketapi:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          trivyignores: .trivyignore.yaml
+      - name: Trivy (SARIF for code scanning, all severities)
+        if: always()
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ticketapi:ci
+          format: sarif
+          output: trivy.sarif
+          exit-code: "0"
+          trivyignores: .trivyignore.yaml
+      - name: Upload Trivy SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        with:
+          sarif_file: trivy.sarif
+          category: trivy
+      - name: Save image for the DAST job
+        run: docker save ticketapi:ci | gzip > image.tar.gz
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: image
+          path: image.tar.gz
+          retention-days: 3
