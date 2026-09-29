@@ -16,7 +16,6 @@ public static class SecurityHeaders
             var headers = context.Response.Headers;
             headers.XContentTypeOptions = "nosniff";
             headers["Referrer-Policy"] = "no-referrer";
-            headers.ContentSecurityPolicy = "default-src 'none'; frame-ancestors 'none'";
             headers["Cross-Origin-Resource-Policy"] = "same-origin";
             headers.Remove("Server");
             if (context.Request.Path.StartsWithSegments("/api", StringComparison.Ordinal))
