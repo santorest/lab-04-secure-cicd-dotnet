@@ -26,6 +26,8 @@ jobs:
       - run: dotnet restore
       - run: dotnet build --no-restore -warnaserror
       - run: dotnet test --no-build --logger "trx;LogFileName=results.trx"
+      - name: Results collector tests (Python, stdlib)
+        run: python3 -m unittest discover -s tools -v
 
   dependencies:
     runs-on: ubuntu-24.04
