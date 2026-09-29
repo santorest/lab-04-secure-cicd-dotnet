@@ -1,0 +1,103 @@
+{
+  "repo": "santorest/lab-04-secure-cicd-dotnet",
+  "generated": "2026-09-29T23:40:04Z",
+  "ci_runs": 5,
+  "pipeline_median_seconds": 275.0,
+  "jobs": {
+    "build-test": {
+      "median_seconds": 32.0,
+      "runs": 5
+    },
+    "config": {
+      "median_seconds": 28.5,
+      "runs": 4
+    },
+    "container": {
+      "median_seconds": 66.5,
+      "runs": 4
+    },
+    "dast": {
+      "median_seconds": 167.0,
+      "runs": 4
+    },
+    "dependencies": {
+      "median_seconds": 27.5,
+      "runs": 4
+    },
+    "sast": {
+      "median_seconds": 28.5,
+      "runs": 4
+    },
+    "secrets": {
+      "median_seconds": 11.0,
+      "runs": 4
+    }
+  },
+  "demo_prs": [
+    {
+      "number": 3,
+      "title": "[demo] vulnerable NuGet package (System.Text.Json 8.0.4)",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/3",
+      "failed_checks": [
+        "CodeQL",
+        "build-test",
+        "dependencies"
+      ],
+      "merged": false
+    },
+    {
+      "number": 4,
+      "title": "[demo] SQL built from user input (injection)",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/4",
+      "failed_checks": [
+        "CodeQL",
+        "build-test"
+      ],
+      "merged": false
+    },
+    {
+      "number": 5,
+      "title": "[demo] outdated base image (aspnet 10.0.0-noble)",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/5",
+      "failed_checks": [
+        "container"
+      ],
+      "merged": false
+    },
+    {
+      "number": 6,
+      "title": "[demo] Content-Security-Policy header removed",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/6",
+      "failed_checks": [
+        "build-test"
+      ],
+      "merged": false
+    },
+    {
+      "number": 7,
+      "title": "[demo] hard-coded API key (dummy)",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/7",
+      "failed_checks": [
+        "secrets"
+      ],
+      "merged": false
+    },
+    {
+      "number": 8,
+      "title": "[demo] SQL injection with the compiler warning silenced",
+      "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/8",
+      "failed_checks": [
+        "CodeQL",
+        "dast",
+        "secrets"
+      ],
+      "merged": false
+    }
+  ],
+  "release": {
+    "runs": 4,
+    "median_seconds": 91.0,
+    "latest_run_url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36645987984",
+    "latest_head_sha": "042078116f3f8d7ffc19b2e10596277490f3631b"
+  }
+}
