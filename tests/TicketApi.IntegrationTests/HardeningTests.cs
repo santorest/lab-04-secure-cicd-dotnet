@@ -20,6 +20,8 @@ public class HardeningTests(ApiFactory factory) : IClassFixture<ApiFactory>
         Assert.Equal("nosniff", Header(response, "X-Content-Type-Options"));
         Assert.Equal("no-referrer", Header(response, "Referrer-Policy"));
         Assert.Equal("default-src 'none'; frame-ancestors 'none'", Header(response, "Content-Security-Policy"));
+        // Found by the ZAP scan (rule 90004): other sites must not embed API responses.
+        Assert.Equal("same-origin", Header(response, "Cross-Origin-Resource-Policy"));
         Assert.False(response.Headers.Contains("Server"));
     }
 
