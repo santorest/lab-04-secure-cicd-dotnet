@@ -1,0 +1,6 @@
+%% Source for pipeline.svg (kept in sync by hand)
+flowchart LR
+  pr[Pull request] --> bt[build-test] & dep[dependencies] & sast[sast: Semgrep + CodeQL] & sec[secrets: gitleaks] & cfg[config: Checkov, actionlint, zizmor]
+  bt --> ctr[container: build, read-only smoke, Trivy] --> dast[dast: ZAP API scan]
+  dep & sast & sec & cfg & dast --> rs[Ruleset on main: PR + 8 checks + no High CodeQL alerts]
+  rs -->|merge| push[Push to GHCR] --> sbom[CycloneDX SBOMs] --> sign[cosign keyless sign] --> prov[Build provenance] --> verify[Verify]

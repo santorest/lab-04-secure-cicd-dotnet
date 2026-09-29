@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Lab 04 pipeline: pull-request gates and signed release</title>
+  <desc id="desc">A pull request runs build and tests, dependency, SAST, secret and configuration checks in parallel, then builds the container image, scans it with Trivy and runs an authenticated ZAP scan against it. The main-branch ruleset requires all checks and CodeQL. After the merge, the release workflow pushes the image to GHCR, attaches CycloneDX SBOMs, signs it keylessly with cosign, records build provenance and verifies both.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; rx: 8; }
+      .gate { fill: #ecfeff; stroke: #0e7490; stroke-width: 1.5; rx: 8; }
+      .rel { fill: #f0fdf4; stroke: #15803d; stroke-width: 1.5; rx: 8; }
+      .lane { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1; rx: 12; }
+      .t { font-size: 14px; fill: #0f172a; font-weight: 600; }
+      .s { font-size: 12px; fill: #475569; }
+      .h { font-size: 13px; fill: #334155; font-weight: 700; letter-spacing: .04em; }
+      .line { stroke: #475569; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1000" height="560" fill="#ffffff"/>
+
+  <!-- Pull request lane -->
+  <rect class="lane" x="20" y="20" width="960" height="300"/>
+  <text class="h" x="40" y="46">PULL REQUEST GATES (ci.yml + codeql.yml)</text>
+
+  <rect class="box" x="40" y="130" width="130" height="64"/>
+  <text class="t" x="105" y="158" text-anchor="middle">Pull request</text>
+  <text class="s" x="105" y="178" text-anchor="middle">feature branch</text>
+
+  <rect class="gate" x="220" y="62" width="200" height="40"/>
+  <text class="t" x="320" y="87" text-anchor="middle">build-test · xUnit (60)</text>
+  <rect class="gate" x="220" y="108" width="200" height="40"/>
+  <text class="t" x="320" y="133" text-anchor="middle">dependencies · NuGet audit</text>
+  <rect class="gate" x="220" y="154" width="200" height="40"/>
+  <text class="t" x="320" y="179" text-anchor="middle">sast · Semgrep + CodeQL</text>
+  <rect class="gate" x="220" y="200" width="200" height="40"/>
+  <text class="t" x="320" y="225" text-anchor="middle">secrets · gitleaks</text>
+  <rect class="gate" x="220" y="246" width="200" height="40"/>
+  <text class="t" x="320" y="266" text-anchor="middle">config · Checkov,</text>
+  <text class="s" x="320" y="281" text-anchor="middle">actionlint, zizmor</text>
+
+  <rect class="gate" x="480" y="62" width="200" height="64"/>
+  <text class="t" x="580" y="88" text-anchor="middle">container</text>
+  <text class="s" x="580" y="108" text-anchor="middle">build · read-only smoke · Trivy</text>
+  <rect class="gate" x="480" y="150" width="200" height="64"/>
+  <text class="t" x="580" y="176" text-anchor="middle">dast</text>
+  <text class="s" x="580" y="196" text-anchor="middle">ZAP API scan, authenticated</text>
+
+  <rect class="box" x="740" y="106" width="220" height="112"/>
+  <text class="t" x="850" y="134" text-anchor="middle">Ruleset on main</text>
+  <text class="s" x="850" y="156" text-anchor="middle">PR required · 8 checks green</text>
+  <text class="s" x="850" y="174" text-anchor="middle">no High+ CodeQL alerts</text>
+  <text class="s" x="850" y="192" text-anchor="middle">no force-push · linear history</text>
+  <text class="s" x="850" y="210" text-anchor="middle">exceptions register enforced</text>
+
+  <path class="line" d="M170 162 H195 V82 H218"/>
+  <path class="line" d="M195 128 H218"/>
+  <path class="line" d="M195 162 V174 H218"/>
+  <path class="line" d="M195 174 V220 H218"/>
+  <path class="line" d="M195 220 V266 H218"/>
+  <path class="line" d="M420 82 H450 V94 H478"/>
+  <path class="line" d="M580 126 V148"/>
+  <path class="line" d="M680 182 H710 V162 H738"/>
+  <path class="line" d="M420 128 H710 V150"/>
+  <path class="line" d="M420 266 H710 V190"/>
+
+  <!-- Release lane -->
+  <rect class="lane" x="20" y="340" width="960" height="200"/>
+  <text class="h" x="40" y="366">RELEASE ON MERGE TO MAIN (release.yml)</text>
+
+  <rect class="rel" x="40" y="400" width="160" height="72"/>
+  <text class="t" x="120" y="428" text-anchor="middle">Push to GHCR</text>
+  <text class="s" x="120" y="448" text-anchor="middle">tag = commit SHA</text>
+  <rect class="rel" x="230" y="400" width="170" height="72"/>
+  <text class="t" x="315" y="428" text-anchor="middle">SBOMs</text>
+  <text class="s" x="315" y="448" text-anchor="middle">CycloneDX: NuGet + image</text>
+  <rect class="rel" x="430" y="400" width="170" height="72"/>
+  <text class="t" x="515" y="428" text-anchor="middle">Sign (cosign)</text>
+  <text class="s" x="515" y="448" text-anchor="middle">keyless, GitHub OIDC</text>
+  <rect class="rel" x="630" y="400" width="150" height="72"/>
+  <text class="t" x="705" y="428" text-anchor="middle">Provenance</text>
+  <text class="s" x="705" y="448" text-anchor="middle">build attestation</text>
+  <rect class="rel" x="810" y="400" width="150" height="72"/>
+  <text class="t" x="885" y="428" text-anchor="middle">Verify</text>
+  <text class="s" x="885" y="448" text-anchor="middle">cosign + gh attestation</text>
+
+  <path class="line" d="M850 218 V300 H120 V398"/>
+  <path class="line" d="M200 436 H228"/>
+  <path class="line" d="M400 436 H428"/>
+  <path class="line" d="M600 436 H628"/>
+  <path class="line" d="M780 436 H808"/>
+  <text class="s" x="500" y="510" text-anchor="middle">Anyone can check a release: cosign verify ghcr.io/santorest/lab-04-secure-cicd-dotnet@&lt;digest&gt; (see README)</text>
+</svg>
