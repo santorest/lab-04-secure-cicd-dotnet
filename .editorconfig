@@ -10,3 +10,7 @@ trim_trailing_whitespace = true
 
 [*.{yml,yaml,json,xml,props,csproj,slnx}]
 indent_size = 2
+
+# Test method names use underscores for readability (CA1707 is about public API naming).
+[tests/**.cs]
+dotnet_diagnostic.CA1707.severity = none
