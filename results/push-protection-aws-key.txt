@@ -1,0 +1,11 @@
+Demo 2a (2026-09-29): pushing a commit with a random, never-valid AWS-style key pair in
+src/TicketApi/appsettings.Demo.json to branch demo/dummy-secret. GitHub rejected the push itself
+(before any CI ran):
+
+error: GH013: Repository rule violations found for refs/heads/demo/dummy-secret.
+- GITHUB PUSH PROTECTION
+  Resolve the following violations before pushing again
+  - Push cannot contain secrets
+  —— Amazon AWS Access Key ID ——  path: src/TicketApi/appsettings.Demo.json:3
+  —— Amazon AWS Secret Access Key ——  path: src/TicketApi/appsettings.Demo.json:4
+ ! [remote rejected] demo/dummy-secret -> demo/dummy-secret (push declined due to repository rule violations)
