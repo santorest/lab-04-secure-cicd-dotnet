@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using TicketApi.Auth;
 using TicketApi.Data;
 using TicketApi.Tickets;
+using TicketApi.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,15 +52,38 @@ builder.Services.AddRateLimiter(o =>
         _ => new FixedWindowRateLimiterOptions { PermitLimit = loginsPerMinute, Window = TimeSpan.FromMinutes(1) }));
 });
 builder.Services.AddProblemDetails();
+builder.Services.AddOpenApi(o => o.AddDocumentTransformer((document, _, _) =>
+{
+    document.Components ??= new OpenApiComponents();
+    document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
+    document.Components.SecuritySchemes["Bearer"] = new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+    };
+    return Task.CompletedTask;
+}));
+builder.WebHost.ConfigureKestrel(o =>
+{
+    o.AddServerHeader = false;
+    o.Limits.MaxRequestBodySize = SecurityHeaders.MaxRequestBodyBytes;
+});
 
 var app = builder.Build();
 
 await Seeder.MigrateAndSeedAsync(app.Services, app.Configuration);
 
+// Unhandled errors become RFC 9457 problem details with no exception text; there is no developer error page.
+app.UseExceptionHandler();
+app.UseSecurityHeaders();
+app.UseRequestSizeLimit();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRateLimiter();
 
+app.MapGet("/health", () => TypedResults.Ok(new { status = "ok" })).AllowAnonymous().ExcludeFromDescription();
+app.MapOpenApi().AllowAnonymous();
 app.MapAuthEndpoints();
 app.MapTicketEndpoints();
 
