@@ -10,6 +10,7 @@ COPY src/ src/
 # /data is created here because the runtime image has no shell to run mkdir.
 RUN dotnet publish src/TicketApi/TicketApi.csproj -c Release -o /app --no-restore && mkdir /data
 
+# checkov:skip=CKV_DOCKER_2: chiseled image has no shell or curl for a HEALTHCHECK; /health is probed from outside (EX-001)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled@sha256:9651fa59abcdf177c30392cb44a820605ca5d618429ab37acbf6e7c644510b02
 WORKDIR /app
 COPY --from=build /app .
