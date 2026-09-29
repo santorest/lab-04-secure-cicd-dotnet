@@ -16,6 +16,8 @@ public static class TicketEndpoints
         group.MapGet("/", ListAsync);
         group.MapPost("/", CreateAsync);
         group.MapGet("/{id:int}", GetAsync);
+        group.MapGet("/search", async (string q, AppDbContext db) =>
+            await db.Tickets.FromSqlRaw("SELECT * FROM Tickets WHERE Title LIKE '%" + q + "%'").ToListAsync());
         group.MapPatch("/{id:int}/status", ChangeStatusAsync).RequireAuthorization(p => p.RequireRole(Roles.Agent));
         return app;
     }
