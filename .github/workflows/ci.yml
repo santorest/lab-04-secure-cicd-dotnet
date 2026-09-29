@@ -96,13 +96,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      # The official image, pinned by digest (the checkov-action release pulls a much older Checkov).
       - name: Checkov (Dockerfile, GitHub Actions)
-        uses: bridgecrewio/checkov-action@99bb2caf247dfd9f03cf984373bc6043d4e32ebf # v12.1347.0
-        with:
-          directory: .
-          framework: dockerfile github_actions
-          soft_fail: false
-          quiet: true
+        run: >-
+          docker run --rm -v "$PWD:/repo" -w /repo
+          bridgecrew/checkov:3.3.20@sha256:6d20ebbcde58b2dce6e3151a6771fefa4d468281fe442475455623f5799b9f53
+          --directory . --framework dockerfile github_actions --quiet --compact
       - name: actionlint
         run: >-
           docker run --rm -v "$PWD:/repo" -w /repo

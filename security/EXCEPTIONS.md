@@ -11,3 +11,4 @@ Where suppressions live: `Directory.Build.props` (`NuGetAuditSuppress`, tool `nu
 
 | ID | Tool | Rule | Scope | Reason | Owner | Expires |
 |---|---|---|---|---|---|---|
+| EX-001 | checkov | CKV_DOCKER_2 | Dockerfile (runtime stage) | Chiseled image has no shell or curl, so a Docker HEALTHCHECK can't run inside it; adding one would add attack surface. `/health` is probed from outside: the CI smoke test and the orchestrator's liveness probe. | @santorest | 2027-03-31 |
