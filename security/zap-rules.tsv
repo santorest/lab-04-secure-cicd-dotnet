@@ -1,0 +1,6 @@
+# ZAP API scan rules: <rule id>	<IGNORE|WARN|FAIL>	<name>. IGNORE/WARN need a row in security/EXCEPTIONS.md.
+# Mediums listed as FAIL break the build (Highs always do).
+10038	FAIL	(Content Security Policy header not set)
+10021	FAIL	(X-Content-Type-Options header missing)
+10098	FAIL	(Cross-domain misconfiguration)
+90022	FAIL	(Application error disclosure)
