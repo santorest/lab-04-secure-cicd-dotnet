@@ -46,6 +46,41 @@ public sealed class ExceptionsPolicyTests : IDisposable
             found);
     }
 
+    public static TheoryData<string, string, string, string> Bypasses => new()
+    {
+        // path, content, expected tool, expected rule
+        { "tests/Some.Tests/A.cs", "var x = 1; // nosemgrep\n", "semgrep", "*" },
+        { "tools/script.py", "x = 1  # nosemgrep: python.lang.rule\n", "semgrep", "python.lang.rule" },
+        { "src/App/B.cs", "var key = \"abc\"; // gitleaks:allow\n", "gitleaks", "allow:src/App/B.cs" },
+        { ".gitleaks.toml", "[allowlist]\npaths = ['src']\n", "gitleaks", "config:.gitleaks.toml" },
+        { ".semgrepignore", "src/\n", "semgrep", "config:.semgrepignore" },
+        { ".checkov.yaml", "skip-check: [CKV_DOCKER_3]\n", "checkov", "config:.checkov.yaml" },
+        { ".checkov.yml", "skip-check: [CKV_DOCKER_3]\n", "checkov", "config:.checkov.yml" },
+        { "trivy.yaml", "scan:\n  skip-dirs: [app]\n", "trivy", "config:trivy.yaml" },
+        { ".github/workflows/other.yaml", "# checkov:skip=CKV_GHA_1: x\n", "checkov", "CKV_GHA_1" },
+        { "src/App/App.csproj", "<Project><PropertyGroup><NoWarn>$(NoWarn);NU1903</NoWarn></PropertyGroup></Project>", "nuget", "NoWarn:NU1903" },
+        { "Directory.Packages.props", "<Project><PropertyGroup><NuGetAudit>false</NuGetAudit></PropertyGroup></Project>", "nuget", "NuGetAudit:false" },
+        { "src/App/App.csproj", "<ItemGroup><NuGetAuditSuppress Include=\"https://github.com/advisories/GHSA-x\" /></ItemGroup>", "nuget", "https://github.com/advisories/GHSA-x" },
+        { "security/zap-rules.tsv", "40018\tOUTOFSCOPE\t.*search.*\n", "zap", "40018" },
+    };
+
+    [Theory]
+    [MemberData(nameof(Bypasses))]
+    public void Every_way_to_silence_a_scanner_counts_as_a_suppression(string path, string content, string tool, string rule)
+    {
+        Write(path, content);
+        Assert.Contains(Suppressions.Find(_root), s => s.Tool == tool && s.Rule == rule);
+    }
+
+    [Fact]
+    public void Build_output_and_git_folders_are_not_scanned()
+    {
+        Write("src/App/bin/Debug/x.cs", "// nosemgrep\n");
+        Write("src/App/obj/y.cs", "// nosemgrep\n");
+        Write(".git/z", "// gitleaks:allow\n");
+        Assert.Empty(Suppressions.Find(_root));
+    }
+
     [Fact]
     public void An_unregistered_suppression_is_reported()
     {

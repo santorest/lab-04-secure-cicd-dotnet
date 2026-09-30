@@ -8,6 +8,10 @@ on:
 
 permissions: {}
 
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: release
   cancel-in-progress: false
@@ -31,6 +35,12 @@ jobs:
         with:
           global-json-file: global.json
 
+      # Third-party tooling runs before the registry login, so it never sees the push credentials.
+      - name: SBOM of the NuGet dependencies (CycloneDX)
+        run: |
+          dotnet tool restore
+          dotnet tool run dotnet-CycloneDX src/TicketApi/TicketApi.csproj --output sbom --filename nuget.cdx.json --output-format Json
+
       - name: Log in to GHCR
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
@@ -38,19 +48,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Only the commit-SHA tag is pushed now; "latest" moves at the end, once the image is signed and verified.
       - name: Build and push
         run: |
-          docker build -t "$IMAGE:$GITHUB_SHA" -t "$IMAGE:latest" .
+          docker build -t "$IMAGE:$GITHUB_SHA" .
           docker push "$IMAGE:$GITHUB_SHA"
-          docker push "$IMAGE:latest"
           digest=$(docker inspect --format '{{index .RepoDigests 0}}' "$IMAGE:$GITHUB_SHA" | cut -d@ -f2)
+          test -n "$digest"
           echo "DIGEST=$digest" >> "$GITHUB_ENV"
           echo "Pushed $IMAGE@$digest"
-
-      - name: SBOM of the NuGet dependencies (CycloneDX)
-        run: |
-          dotnet tool restore
-          dotnet tool run dotnet-CycloneDX src/TicketApi/TicketApi.csproj --output sbom --filename nuget.cdx.json --output-format Json
       - name: SBOM of the image (CycloneDX)
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
@@ -82,8 +88,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cosign verify "$IMAGE@$DIGEST" \
-            --certificate-identity-regexp '^https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main$' \
+            --certificate-identity https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main \
             --certificate-oidc-issuer https://token.actions.githubusercontent.com > cosign-verify.json
           jq -r '.[0].optional.Subject, .[0].optional.githubWorkflowRef // empty' cosign-verify.json
           gh attestation verify "oci://$IMAGE@$DIGEST" --owner santorest
-          echo "### Released $IMAGE@$DIGEST (signed, SBOM attached, provenance verified)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Move latest to the verified image
+        run: |
+          docker tag "$IMAGE:$GITHUB_SHA" "$IMAGE:latest"
+          docker push "$IMAGE:latest"
+          echo "### Released $IMAGE@$DIGEST (signed, SBOM attached, provenance verified, tagged latest)" >> "$GITHUB_STEP_SUMMARY"

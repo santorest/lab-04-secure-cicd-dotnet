@@ -21,6 +21,7 @@ FIXTURES = {
         ci_run(1, "2026-09-29T10:00:00Z", "2026-09-29T10:05:00Z"),
         ci_run(2, "2026-09-29T11:00:00Z", "2026-09-29T11:07:00Z"),
         ci_run(3, "2026-09-29T12:00:00Z", "2026-09-29T12:06:00Z"),
+        ci_run(4, "2026-09-29T09:00:00Z", "2026-09-29T09:00:27Z"),
     ]},
     f"{API}/runs/1/jobs": {"jobs": [
         job("build-test", "2026-09-29T10:00:00Z", "2026-09-29T10:00:30Z"),
@@ -34,6 +35,9 @@ FIXTURES = {
     f"{API}/runs/3/jobs": {"jobs": [
         job("build-test", "2026-09-29T12:00:00Z", "2026-09-29T12:00:20Z"),
         job("dast", "2026-09-29T12:02:00Z", "2026-09-29T12:04:00Z"),
+    ]},
+    f"{API}/runs/4/jobs": {"jobs": [
+        job("build-test", "2026-09-29T09:00:00Z", "2026-09-29T09:00:25Z"),
     ]},
     f"{API}/repos/{REPO}/pulls?state=all&per_page=100": [
         {"number": 3, "title": "[demo] vulnerable package", "html_url": "u3", "head": {"sha": "d3"}, "merged_at": None},
@@ -60,7 +64,8 @@ class CollectTests(unittest.TestCase):
     def setUp(self):
         self.result = collect(REPO, fetch=fake_fetch)
 
-    def test_counts_successful_ci_runs_on_main(self):
+    def test_counts_only_full_pipeline_runs(self):
+        # Run 4 ran build-test only (before the other gates existed): it is not a full pipeline run.
         self.assertEqual(self.result["ci_runs"], 3)
 
     def test_job_medians_use_successful_jobs_only(self):

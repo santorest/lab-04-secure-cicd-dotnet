@@ -27,7 +27,7 @@
   <text class="s" x="105" y="178" text-anchor="middle">feature branch</text>
 
   <rect class="gate" x="220" y="62" width="200" height="40"/>
-  <text class="t" x="320" y="87" text-anchor="middle">build-test · xUnit (60)</text>
+  <text class="t" x="320" y="87" text-anchor="middle">build-test · xUnit (74)</text>
   <rect class="gate" x="220" y="108" width="200" height="40"/>
   <text class="t" x="320" y="133" text-anchor="middle">dependencies · NuGet audit</text>
   <rect class="gate" x="220" y="154" width="200" height="40"/>
