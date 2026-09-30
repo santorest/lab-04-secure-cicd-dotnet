@@ -2,7 +2,7 @@
 slug: secure-cicd-dotnet
 category: devsecops-appsec
 repo_url: https://github.com/santorest/lab-04-secure-cicd-dotnet
-status: design               # design | in_progress | complete — complete once the owner confirms the results
+status: complete             # design | in_progress | complete — confirmed by the owner 2026-09-29
 difficulty: intermediate     # beginner | intermediate | advanced
 featured: true
 # The write-up shows real pipeline output, not illustrative samples.
