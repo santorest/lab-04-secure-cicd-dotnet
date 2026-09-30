@@ -21,8 +21,8 @@ summary:
     provenance; six demo PRs show each gate blocking a real problem.
   es: >-
     API de tickets en ASP.NET Core con un pipeline de GitHub Actions que controla cada pull request (pruebas,
-    dependencias, SAST, secretos, configuración, CVE del contenedor, DAST autenticado) y publica imágenes
-    firmadas con SBOM y procedencia; seis PR de demostración muestran cada control bloqueando un problema real.
+    dependencias, SAST, secretos, configuración, CVE, DAST) y publica imágenes firmadas con SBOM; seis PR de
+    demostración muestran cada control bloqueando un problema real.
 tools: [.NET, ASP.NET Core, GitHub Actions, CodeQL, Semgrep, gitleaks, Trivy, OWASP ZAP, Checkov, CycloneDX, cosign]
 mitre_attack: []
 bundle:
