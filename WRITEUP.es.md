@@ -19,7 +19,8 @@ bundle: "Publicado en el sitio del portafolio con su checksum SHA-256"
 > configuración de workflows y Dockerfile, CVE del contenedor y un escaneo DAST autenticado) antes de que un
 > ruleset de la rama permita integrarlo; cada integración publica una imagen firmada con SBOM y procedencia de
 > compilación que cualquiera puede verificar. Seis pull requests de demostración, rotos a propósito, muestran
-> cada control bloqueando un problema real.
+> los controles bloqueando problemas reales (el control de configuración y Semgrep no bloquearon ninguno; la
+> sección 6 muestra cuáles sí).
 > **Todo se ejecutó de verdad en runners de GitHub; todas las cifras salen de esas ejecuciones.**
 
 | | |
@@ -57,8 +58,9 @@ Una API de tickets en ASP.NET Core 10 (minimal APIs, EF Core con SQLite):
   `Referrer-Policy`, `Cross-Origin-Resource-Policy`, sin encabezado `Server`, y `Cache-Control: no-store` bajo
   `/api`. Los errores son *problem details* (RFC 9457) sin trazas; los cuerpos de más de 64 KB reciben 413.
 - El contenedor usa la imagen **chiseled** de .NET de Microsoft (sin shell ni gestor de paquetes), con usuario
-  no root y sistema de archivos raíz de **solo lectura**; solo `/data` (el archivo SQLite) admite escritura.
-- **60 pruebas .NET** (15 unitarias, 29 de integración, 16 de política del repositorio), incluidos tokens
+  no root y sistema de archivos raíz de **solo lectura**; solo `/data` (el archivo SQLite) y un `/tmp` en memoria
+  admiten escritura.
+- **74 pruebas .NET** (15 unitarias, 29 de integración, 30 de política del repositorio), incluidos tokens
   falsificados, expirados, con `alg: none`, emisor o audiencia incorrectos, acceso entre usuarios y paginación
   inválida.
 
@@ -109,33 +111,33 @@ registra la **procedencia de compilación** y luego lo verifica todo como lo har
 
 ```bash
 cosign verify ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> \
-  --certificate-identity-regexp '^https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main$' \
+  --certificate-identity https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 gh attestation verify oci://ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> --owner santorest
 ```
 
-La primera versión también se verificó desde otro equipo Windows con cosign v3.1.3
-([results/cosign-verify.txt](results/cosign-verify.txt)); la misma comprobación con la identidad de otro
-repositorio falla, como debe ser.
+La primera versión también se verificó desde otro equipo Windows con cosign v3.1.3, y la misma comprobación
+con la identidad de otro repositorio falla, como debe ser; ambos comandos y sus códigos de salida están en
+[results/cosign-verify.txt](results/cosign-verify.txt).
 
 ## 6. Resultados
 
 Todas las cifras salen de [results/results.json](results/results.json), generado desde la API pública de
 GitHub con `tools/collect_results.py` el 2026-09-29.
 
-**Tiempo del pipeline** (ejecuciones exitosas en `main`):
+**Tiempo del pipeline** (ejecuciones exitosas y completas de CI en `main`, es decir, con todos los controles):
 
 | | Mediana | Ejecuciones |
 |---|---|---|
-| Pipeline completo del PR (tiempo real) | 275 s (4 min 35 s) | 5 |
-| build-test | 32 s | 5 |
-| dependencies | 27,5 s | 4 |
-| sast (Semgrep) | 28,5 s | 4 |
-| secrets | 11 s | 4 |
-| config | 28,5 s | 4 |
-| container | 66,5 s | 4 |
-| dast (ZAP) | 167 s | 4 |
-| Publicación (firma, SBOM, procedencia, verificación) | 91 s | 4 |
+| Pipeline de CI completo (tiempo real) | 282 s (4 min 42 s) | 6 |
+| build-test | 33,5 s | 6 |
+| dependencies | 26,5 s | 6 |
+| sast (Semgrep) | 28 s | 6 |
+| secrets | 12 s | 6 |
+| config | 27,5 s | 6 |
+| container | 66,5 s | 6 |
+| dast (ZAP) | 167,5 s | 6 |
+| Publicación (firma, SBOM, procedencia, verificación) | 82 s | 7 |
 
 **Pull requests de demostración** (cada uno añade un problema deliberado; cerrados sin integrar; detalle en
 [docs/demo-prs.md](docs/demo-prs.md)):
@@ -165,8 +167,8 @@ GitHub con `tools/collect_results.py` el 2026-09-29.
 - **Las capas atrapan lo que una sola herramienta no ve.** Las reglas C# de Semgrep no marcaron el SQL
   concatenado y sus reglas de secretos no marcaron la clave genérica; el analizador de EF Core, CodeQL, ZAP y
   gitleaks sí. Ninguna herramienta sola habría detenido las seis demos.
-- **Los controles baratos van primero.** Dos demos nunca llegaron a los controles costosos: una prueba y un
-  analizador del compilador las detuvieron en los primeros 30 segundos.
+- **Los controles baratos van primero.** Dos demos nunca llegaron a los trabajos de contenedor y DAST: una
+  prueba de integración y un analizador del compilador las detuvieron en `build-test`, en unos 35 segundos.
 - **La protección de push es el primer control.** GitHub rechazó la clave estilo AWS antes de que corriera CI.
 - **Los escáneres necesitan alcance.** Un escaneo de secretos del historial completo que traía todas las ramas
   permitía que la fuga de una rama hiciera fallar los PR de todos; lo encontró una demo y se corrigió revisando

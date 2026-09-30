@@ -1,36 +1,36 @@
 {
   "repo": "santorest/lab-04-secure-cicd-dotnet",
-  "generated": "2026-09-29T23:40:04Z",
-  "ci_runs": 5,
-  "pipeline_median_seconds": 275.0,
+  "generated": "2026-09-30T02:00:17Z",
+  "ci_runs": 6,
+  "pipeline_median_seconds": 282.0,
   "jobs": {
     "build-test": {
-      "median_seconds": 32.0,
-      "runs": 5
+      "median_seconds": 33.5,
+      "runs": 6
     },
     "config": {
-      "median_seconds": 28.5,
-      "runs": 4
+      "median_seconds": 27.5,
+      "runs": 6
     },
     "container": {
       "median_seconds": 66.5,
-      "runs": 4
+      "runs": 6
     },
     "dast": {
-      "median_seconds": 167.0,
-      "runs": 4
+      "median_seconds": 167.5,
+      "runs": 6
     },
     "dependencies": {
-      "median_seconds": 27.5,
-      "runs": 4
+      "median_seconds": 26.5,
+      "runs": 6
     },
     "sast": {
-      "median_seconds": 28.5,
-      "runs": 4
+      "median_seconds": 28.0,
+      "runs": 6
     },
     "secrets": {
-      "median_seconds": 11.0,
-      "runs": 4
+      "median_seconds": 12.0,
+      "runs": 6
     }
   },
   "demo_prs": [
@@ -95,9 +95,9 @@
     }
   ],
   "release": {
-    "runs": 4,
-    "median_seconds": 91.0,
-    "latest_run_url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36645987984",
-    "latest_head_sha": "042078116f3f8d7ffc19b2e10596277490f3631b"
+    "runs": 7,
+    "median_seconds": 82.0,
+    "latest_run_url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36657440246",
+    "latest_head_sha": "560224a974ae7649c0225676c94ffdc23028517e"
   }
 }

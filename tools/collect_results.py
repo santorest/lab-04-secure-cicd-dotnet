@@ -38,13 +38,19 @@ def _successful_runs(repo: str, workflow: str, fetch) -> list[dict]:
     return fetch(url)["workflow_runs"]
 
 
+FULL_PIPELINE_JOB = "dast"  # the last gate; runs without it predate the full pipeline
+
+
 def collect(repo: str, fetch=fetch_json) -> dict:
-    ci_runs = _successful_runs(repo, "ci.yml", fetch)
+    ci_runs = []
     durations: dict[str, list[float]] = defaultdict(list)
-    for run in ci_runs:
-        for job in fetch(run["jobs_url"])["jobs"]:
-            if job["conclusion"] == "success":
-                durations[job["name"]].append(_seconds(job["started_at"], job["completed_at"]))
+    for run in _successful_runs(repo, "ci.yml", fetch):
+        jobs = [j for j in fetch(run["jobs_url"])["jobs"] if j["conclusion"] == "success"]
+        if FULL_PIPELINE_JOB not in {j["name"] for j in jobs}:
+            continue
+        ci_runs.append(run)
+        for job in jobs:
+            durations[job["name"]].append(_seconds(job["started_at"], job["completed_at"]))
 
     demos = []
     for pr in fetch(f"{API}/repos/{repo}/pulls?state=all&per_page=100"):

@@ -5,9 +5,17 @@ configuration must have a matching row (same tool and rule), and every row must 
 An entry is valid through its expiry date; after that CI fails until the finding is fixed or the exception is
 renewed with a new reason. This is enforced by `tests/RepoPolicy.Tests` on every pull request.
 
-Where suppressions live: `Directory.Build.props` (`NuGetAuditSuppress`, tool `nuget`), `.trivyignore.yaml`
-(`trivy`), `// nosemgrep: <rule>` in `src/` (`semgrep`), `IGNORE`/`WARN` lines in `security/zap-rules.tsv`
-(`zap`), `checkov:skip=<id>` in the Dockerfile or workflows (`checkov`), `.gitleaksignore` (`gitleaks`).
+What counts as a suppression (rule to register in brackets):
+
+- NuGet: an audit-suppress item for an advisory URL [the URL], a NU19xx code in a NoWarn property
+  [NoWarn:NU19xx], or turning the audit off [NuGetAudit:false], in any .csproj/.props/.targets file.
+- Semgrep: an inline nosemgrep comment anywhere in the repo [the rule id, or * when none is named], or a
+  .semgrepignore file [config:.semgrepignore].
+- gitleaks: a line in .gitleaksignore [the fingerprint], an inline allow comment [allow:<file path>], or a
+  .gitleaks.toml file [config:.gitleaks.toml].
+- Trivy: an id in .trivyignore.yaml [the CVE], or a trivy.yaml/.yml config file [config:trivy.yaml].
+- Checkov: a skip comment in the Dockerfile or a workflow [the check id], or a .checkov.yaml/.yml file.
+- ZAP: an IGNORE, WARN or OUTOFSCOPE line in security/zap-rules.tsv [the rule id].
 
 | ID | Tool | Rule | Scope | Reason | Owner | Expires |
 |---|---|---|---|---|---|---|

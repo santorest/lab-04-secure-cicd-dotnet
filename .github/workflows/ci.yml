@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# bash -eo pipefail: a failing command anywhere in a pipeline fails the step (no silent passes).
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -65,9 +70,13 @@ jobs:
             semgrep/semgrep:1.178.0@sha256:32e459968daabe7ab86968184a29109b9564aa00392401156f9788452b42786b \
             semgrep scan --metrics=off --config p/csharp --config p/secrets \
             --sarif-output=semgrep.sarif --json-output=semgrep.json
-      - name: "Gate: no ERROR-severity findings"
+      - name: "Gate: no ERROR-severity findings, and every file parsed"
         run: |
           jq -r '.results[] | "\(.extra.severity)\t\(.check_id)\t\(.path):\(.start.line)"' semgrep.json
+          jq -r '.errors[] | "\(.level)\t\(.type)\t\(.path // "")"' semgrep.json
+          parse_errors=$(jq '[.errors[] | select(.level == "error")] | length' semgrep.json)
+          echo "Semgrep errors: $parse_errors"
+          test "$parse_errors" -eq 0
           errors=$(jq '[.results[] | select(.extra.severity == "ERROR")] | length' semgrep.json)
           echo "ERROR findings: $errors"
           test "$errors" -eq 0
@@ -193,9 +202,13 @@ jobs:
             -e Seed__Users__0__UserName=zap-agent -e Seed__Users__0__Password="$password" -e Seed__Users__0__Role=agent \
             ticketapi:ci
           for _ in $(seq 1 30); do curl -fsS http://localhost:8080/health && break; sleep 1; done
+          curl -fsS http://localhost:8080/health
           token=$(curl -fsS -X POST http://localhost:8080/api/auth/login -H 'Content-Type: application/json' \
             -d "{\"userName\":\"zap-agent\",\"password\":\"$password\"}" | jq -r .accessToken)
+          # An empty token would let ZAP scan only 401 responses and pass: prove the token works first.
+          test -n "$token" && test "$token" != null
           echo "::add-mask::$token"
+          curl -fsS -o /dev/null -H "Authorization: Bearer $token" http://localhost:8080/api/tickets
           echo "ZAP_TOKEN=$token" >> "$GITHUB_ENV"
       - name: ZAP API scan (authenticated, OpenAPI-driven)
         run: |

@@ -18,7 +18,7 @@ runs ([results/results.json](results/results.json)). Read the full write-up: [WR
 
 ```bash
 cosign verify ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> \
-  --certificate-identity-regexp '^https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main$' \
+  --certificate-identity https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 gh attestation verify oci://ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> --owner santorest
 ```

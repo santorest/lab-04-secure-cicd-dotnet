@@ -18,7 +18,8 @@ bundle: "Published on the portfolio site with its SHA-256 checksum"
 > must pass seven security gates (tests, vulnerable dependencies, SAST, secrets, workflow and Dockerfile
 > configuration, container CVEs, and an authenticated DAST scan) before a branch ruleset lets it merge, and
 > every merge ships a signed container image with SBOMs and build provenance that anyone can verify.
-> Six deliberately broken demo pull requests show each gate blocking a real problem.
+> Six deliberately broken demo pull requests show the gates blocking real problems (the config gate and
+> Semgrep blocked none of them; section 6 shows what did).
 > **Everything here ran for real on GitHub-hosted runners; all numbers come from those runs.**
 
 | | |
@@ -55,8 +56,8 @@ A ticket API on ASP.NET Core 10 (minimal APIs, EF Core with SQLite):
   `Referrer-Policy`, `Cross-Origin-Resource-Policy`, no `Server` header, and `Cache-Control: no-store` under
   `/api`. Errors are RFC 9457 problem details with no stack traces; bodies over 64 KB get 413.
 - The container runs Microsoft's **chiseled** .NET image (no shell, no package manager) as a non-root user
-  with a **read-only** root filesystem; only `/data` (the SQLite file) is writable.
-- **60 .NET tests** (15 unit, 29 integration, 16 repo-policy), including forged, expired, `alg: none`,
+  with a **read-only** root filesystem; only `/data` (the SQLite file) and an in-memory `/tmp` are writable.
+- **74 .NET tests** (15 unit, 29 integration, 30 repo-policy), including forged, expired, `alg: none`,
   wrong-issuer and wrong-audience tokens, cross-user access, and bad paging input.
 
 ## 3. Pull-request gates
@@ -105,33 +106,33 @@ CycloneDX SBOMs (NuGet dependencies and the whole image), signs the image with *
 
 ```bash
 cosign verify ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> \
-  --certificate-identity-regexp '^https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main$' \
+  --certificate-identity https://github.com/santorest/lab-04-secure-cicd-dotnet/.github/workflows/release.yml@refs/heads/main \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 gh attestation verify oci://ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest> --owner santorest
 ```
 
-The first release was also verified from a separate Windows machine with cosign v3.1.3
-([results/cosign-verify.txt](results/cosign-verify.txt)); the same check with another repository's identity
-fails, as it should.
+The first release was also verified from a separate Windows machine with cosign v3.1.3, and the same check
+with another repository's identity fails, as it should; both commands and their exit codes are in
+[results/cosign-verify.txt](results/cosign-verify.txt).
 
 ## 6. Results
 
 All figures come from [results/results.json](results/results.json), generated from the public GitHub API by
 `tools/collect_results.py` on 2026-09-29.
 
-**Pipeline time** (successful runs on `main`):
+**Pipeline time** (successful full CI runs on `main`, i.e. runs with every gate):
 
 | | Median | Runs |
 |---|---|---|
-| Whole PR pipeline (wall clock) | 275 s (4 min 35 s) | 5 |
-| build-test | 32 s | 5 |
-| dependencies | 27.5 s | 4 |
-| sast (Semgrep) | 28.5 s | 4 |
-| secrets | 11 s | 4 |
-| config | 28.5 s | 4 |
-| container | 66.5 s | 4 |
-| dast (ZAP) | 167 s | 4 |
-| Release (sign, SBOMs, provenance, verify) | 91 s | 4 |
+| Full CI pipeline (wall clock) | 282 s (4 min 42 s) | 6 |
+| build-test | 33.5 s | 6 |
+| dependencies | 26.5 s | 6 |
+| sast (Semgrep) | 28 s | 6 |
+| secrets | 12 s | 6 |
+| config | 27.5 s | 6 |
+| container | 66.5 s | 6 |
+| dast (ZAP) | 167.5 s | 6 |
+| Release (sign, SBOMs, provenance, verify) | 82 s | 7 |
 
 **Demo pull requests** (each adds one deliberate problem; closed unmerged — details in
 [docs/demo-prs.md](docs/demo-prs.md)):
@@ -161,8 +162,8 @@ All figures come from [results/results.json](results/results.json), generated fr
 - **Layers catch what single tools miss.** Semgrep's C# rules didn't flag the concatenated SQL and its secrets
   rules didn't flag the generic API key; the EF Core analyzer, CodeQL, ZAP and gitleaks did. No one tool would
   have caught all six demos.
-- **Cheap checks run first.** Two demos never reached the expensive gates: a unit test and a compiler analyzer
-  stopped them in the first 30 seconds.
+- **Cheap checks run first.** Two demos never reached the container and DAST jobs: an integration test and a
+  compiler analyzer stopped them in `build-test`, within about 35 seconds.
 - **Push protection is the first gate.** GitHub refused the AWS-style key before any CI ran.
 - **Scanners need scoping.** A full-history secret scan that fetched every branch let one branch's leak fail
   everyone's PRs — found by a demo, fixed by scanning only the commit under test.
