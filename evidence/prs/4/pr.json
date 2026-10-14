@@ -1,0 +1,137 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: deliberately adds a search endpoint that concatenates the query string into raw SQL, to show that the **sast** gate (Semgrep) and CodeQL block it. Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:27Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:00:08Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:00:08Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: SQL built from user input (injection)",
+      "oid": "260fcca3575896c7ce512af9e87f817eafdb3f4e"
+    }
+  ],
+  "createdAt": "2026-09-29T23:00:12Z",
+  "headRefName": "demo/sql-injection",
+  "mergedAt": null,
+  "number": 4,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:39Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658755328",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:08Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799590/job/109658754560",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:46Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658755478",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:44Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658755495",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:26Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658755097",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:43Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658755428",
+      "name": "config",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:39Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658880845",
+      "name": "container",
+      "startedAt": "2026-09-29T23:00:39Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:39Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642799583/job/109658881963",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:00:39Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:02Z",
+      "conclusion": "NEUTRAL",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658993721",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:01:00Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658865463",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:00:36Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] SQL built from user input (injection)",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/4"
+}

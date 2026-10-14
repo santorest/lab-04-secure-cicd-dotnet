@@ -1,8 +1,5 @@
 # Lab 04 — Secure CI/CD pipeline for a .NET API
 
-[![CI](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/codeql.yml/badge.svg)](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/codeql.yml)
-[![Release](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/release.yml/badge.svg)](https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/workflows/release.yml)
 
 A small ASP.NET Core ticketing API and a GitHub Actions pipeline that checks every pull request (build and
 tests, vulnerable dependencies, SAST, secrets, workflow/Dockerfile configuration, container CVEs, authenticated

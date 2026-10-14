@@ -1,0 +1,147 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: deliberately adds a hard-coded API key to a config file, to show that the **secrets** gate (gitleaks) blocks it. The value was generated at random for this PR and never belonged to any service. (A first attempt with an AWS-style key pair was already refused by GitHub push protection at `git push`, before CI; see results/push-protection-aws-key.txt.) Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:36Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:00:55Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:18:20Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: hard-coded API key (dummy)",
+      "oid": "93e4124a934d75c5435bed3bec7e70452a61dbb6"
+    }
+  ],
+  "createdAt": "2026-09-29T23:00:59Z",
+  "headRefName": "demo/dummy-secret",
+  "mergedAt": null,
+  "number": 7,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:58Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664149083",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:20:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483950/job/109664147945",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664149036",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:56Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664148935",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:35Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664148954",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664148701",
+      "name": "config",
+      "startedAt": "2026-09-29T23:18:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:20:09Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664309498",
+      "name": "container",
+      "startedAt": "2026-09-29T23:19:02Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:22:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36644483947/job/109664652960",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:20:12Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:20:11Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109664650258",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:20:09Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:18:51Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109664264589",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:18:49Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:19:49Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109664546334",
+      "name": "Trivy",
+      "startedAt": "2026-09-29T23:19:47Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] hard-coded API key (dummy)",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/7"
+}

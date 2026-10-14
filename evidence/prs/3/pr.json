@@ -1,0 +1,137 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: deliberately adds System.Text.Json 8.0.4, which has a High advisory (CVE-2024-43485, GHSA-8g4q-xg66-9fp4), to show that the **dependencies** gate (NuGet audit) blocks it. Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:24Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T22:59:55Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T22:59:55Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: vulnerable NuGet package (System.Text.Json 8.0.4)",
+      "oid": "d19c6acc2487f0e959968b188b25967ebbfd364e"
+    }
+  ],
+  "createdAt": "2026-09-29T22:59:59Z",
+  "headRefName": "demo/vulnerable-package",
+  "mergedAt": null,
+  "number": 3,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:19Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658688892",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:00:06Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:45Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778285/job/109658687268",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:00:05Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:23Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658688944",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:00:06Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:34Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658688843",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:00:06Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658688721",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:00:05Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:31Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658689011",
+      "name": "config",
+      "startedAt": "2026-09-29T23:00:05Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:19Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658772998",
+      "name": "container",
+      "startedAt": "2026-09-29T23:00:19Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:19Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642778519/job/109658774532",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:00:20Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:37Z",
+      "conclusion": "NEUTRAL",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658862771",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:00:36Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:28Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658801784",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:00:25Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] vulnerable NuGet package (System.Text.Json 8.0.4)",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/3"
+}
