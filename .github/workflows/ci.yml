@@ -49,7 +49,7 @@ jobs:
       - name: Vulnerable package report
         if: always()
         run: dotnet list package --vulnerable --include-transitive --format json > vulnerable-packages.json
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: vulnerable-packages
@@ -82,7 +82,7 @@ jobs:
           test "$errors" -eq 0
       - name: Upload Semgrep SARIF
         if: always()
-        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: semgrep.sarif
           category: semgrep
@@ -167,13 +167,13 @@ jobs:
           trivyignores: .trivyignore.yaml
       - name: Upload Trivy SARIF
         if: always()
-        uses: github/codeql-action/upload-sarif@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: trivy.sarif
           category: trivy
       - name: Save image for the DAST job
         run: docker save ticketapi:ci | gzip > image.tar.gz
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: image
           path: image.tar.gz
@@ -186,7 +186,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: image
       - run: gunzip -c image.tar.gz | docker load
@@ -226,7 +226,7 @@ jobs:
           jq -r '.site[].alerts[] | "\(.riskdesc)\t\(.pluginid)\t\(.name)"' zap/zap.json
           echo "High alerts: $highs"
           test "$rc" -eq 0 && test "$highs" -eq 0
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: zap-report
