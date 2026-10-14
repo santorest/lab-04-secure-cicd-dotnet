@@ -1,0 +1,137 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: deliberately adds the removal of the Content-Security-Policy header, to show that the **dast** gate (ZAP rule 10038) blocks it. Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:33Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:00:20Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:00:20Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: Content-Security-Policy header removed",
+      "oid": "92bbfe0929ce74939b379d56c19baeeb6089eda7"
+    }
+  ],
+  "createdAt": "2026-09-29T23:00:23Z",
+  "headRefName": "demo/missing-header",
+  "mergedAt": null,
+  "number": 6,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:03Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109658816708",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:00:30Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:02:15Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818487/job/109658815722",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:00:30Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:49Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109658816673",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:00:30Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:02Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109658816818",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:00:34Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:37Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109658816578",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:00:31Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:50Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109658816447",
+      "name": "config",
+      "startedAt": "2026-09-29T23:00:30Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:03Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109659011165",
+      "name": "container",
+      "startedAt": "2026-09-29T23:01:03Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:03Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642818483/job/109659012346",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:01:03Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:02:08Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109659329840",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:02:04Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:56Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658952761",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:00:53Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] Content-Security-Policy header removed",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/6"
+}

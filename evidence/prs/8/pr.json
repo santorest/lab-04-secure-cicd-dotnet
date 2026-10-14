@@ -1,0 +1,168 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: same injectable search endpoint as #4, but the developer silences the EF Core analyzer (`#pragma warning disable EF1003`), so the build passes. Shows what still catches it: CodeQL code scanning, enforced on main by the ruleset. Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:40Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:00:08Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:00:08Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: SQL built from user input (injection)",
+      "oid": "260fcca3575896c7ce512af9e87f817eafdb3f4e"
+    },
+    {
+      "authoredDate": "2026-09-29T23:06:34Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:06:34Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: SQL injection with the EF1003 analyzer warning silenced",
+      "oid": "74a6636a8cfcef11fdb7ed224815275eb3f648a2"
+    }
+  ],
+  "createdAt": "2026-09-29T23:06:40Z",
+  "headRefName": "demo/sql-injection-analyzer-silenced",
+  "mergedAt": null,
+  "number": 8,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:13Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660731260",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:06:46Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:08:43Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414680/job/109660730316",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:06:47Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:11Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660731572",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:06:47Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:22Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660731411",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:06:47Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:03Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660731546",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:06:47Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660731368",
+      "name": "config",
+      "startedAt": "2026-09-29T23:06:47Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:08:13Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109660876055",
+      "name": "container",
+      "startedAt": "2026-09-29T23:07:16Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:10:58Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643414689/job/109661174854",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:08:16Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:08:38Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109661270678",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:08:33Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:16Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109660879564",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:07:14Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:07:54Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109661068113",
+      "name": "Trivy",
+      "startedAt": "2026-09-29T23:07:52Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] SQL injection with the compiler warning silenced",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/8"
+}

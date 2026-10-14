@@ -1,0 +1,147 @@
+{
+  "baseRefName": "main",
+  "body": "Demonstration PR: deliberately adds an outdated runtime image (mcr.microsoft.com/dotnet/aspnet:10.0.0-noble, the first .NET 10 release, not patched since), to show that the **container** gate (Trivy, fixable High/Critical) blocks it. Not to be merged; it stays closed as evidence for the Lab 04 write-up.",
+  "closedAt": "2026-09-29T23:23:30Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:00:14Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:00:14Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: outdated base image (aspnet 10.0.0-noble)",
+      "oid": "4d5bd5d7d17a566a3636b9be31a73e0ecdeea09d"
+    }
+  ],
+  "createdAt": "2026-09-29T23:00:18Z",
+  "headRefName": "demo/vulnerable-base-image",
+  "mergedAt": null,
+  "number": 5,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:52Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658782553",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:00:24Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:02:20Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807781/job/109658782192",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:00:24Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:52Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658782426",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:00:25Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:00Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658782343",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:00:24Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:28Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658782419",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:00:24Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:49Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658782269",
+      "name": "config",
+      "startedAt": "2026-09-29T23:00:24Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:47Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109658952977",
+      "name": "container",
+      "startedAt": "2026-09-29T23:00:55Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:48Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36642807741/job/109659242046",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:01:48Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:02:11Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109659353783",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:02:09Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:00:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109658945340",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:00:51Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:01:42Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109659195687",
+      "name": "Trivy",
+      "startedAt": "2026-09-29T23:01:39Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "[demo] outdated base image (aspnet 10.0.0-noble)",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/5"
+}

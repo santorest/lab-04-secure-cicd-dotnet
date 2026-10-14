@@ -8,7 +8,6 @@ date: "2026-09-29"
 time_to_reproduce: "2–3 horas (fork, activar Actions, aplicar el ruleset)"
 skills: [.NET, ASP.NET Core, GitHub Actions, CodeQL, Semgrep, gitleaks, Trivy, OWASP ZAP, Checkov, CycloneDX, cosign]
 frameworks: [NIST SSDF (SP 800-218), OWASP SAMM, CIS Controls v8, SLSA]
-repo: "https://github.com/santorest/lab-04-secure-cicd-dotnet"
 bundle: "Publicado en el sitio del portafolio con su checksum SHA-256"
 ---
 
@@ -119,6 +118,8 @@ gh attestation verify oci://ghcr.io/santorest/lab-04-secure-cicd-dotnet@<digest>
 La primera versión también se verificó desde otro equipo Windows con cosign v3.1.3, y la misma comprobación
 con la identidad de otro repositorio falla, como debe ser; ambos comandos y sus códigos de salida están en
 [results/cosign-verify.txt](results/cosign-verify.txt).
+
+Este repositorio ahora es privado, así que las referencias al registro, la firma y la atestación de arriba están archivadas en `evidence/` y no en vivo.
 
 ## 6. Resultados
 

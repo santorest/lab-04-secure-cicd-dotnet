@@ -1,0 +1,30 @@
+# Archived copy: the planted demo key (never valid) is redacted so the secrets scan stays meaningful.
+diff --git a/results/push-protection-aws-key.txt b/results/push-protection-aws-key.txt
+new file mode 100644
+index 0000000..5232266
+--- /dev/null
++++ b/results/push-protection-aws-key.txt
+@@ -0,0 +1,11 @@
++Demo 2a (2026-09-29): pushing a commit with a random, never-valid AWS-style key pair in
++src/TicketApi/appsettings.Demo.json to branch demo/dummy-secret. GitHub rejected the push itself
++(before any CI ran):
++
++error: GH013: Repository rule violations found for refs/heads/demo/dummy-secret.
++- GITHUB PUSH PROTECTION
++  Resolve the following violations before pushing again
++  - Push cannot contain secrets
++  —— Amazon AWS Access Key ID ——  path: src/TicketApi/appsettings.Demo.json:3
++  —— Amazon AWS Secret Access Key ——  path: src/TicketApi/appsettings.Demo.json:4
++ ! [remote rejected] demo/dummy-secret -> demo/dummy-secret (push declined due to repository rule violations)
+diff --git a/src/TicketApi/appsettings.Demo.json b/src/TicketApi/appsettings.Demo.json
+new file mode 100644
+index 0000000..2a331f9
+--- /dev/null
++++ b/src/TicketApi/appsettings.Demo.json
+@@ -0,0 +1,6 @@
++{
++  "Partner": {
++    "BaseUrl": "https://partner.example.com",
++    "api_key": "<demo key redacted in the archive>"
++  }
++}

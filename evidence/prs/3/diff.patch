@@ -1,0 +1,24 @@
+diff --git a/Directory.Packages.props b/Directory.Packages.props
+index 70166f2..699069f 100644
+--- a/Directory.Packages.props
++++ b/Directory.Packages.props
+@@ -6,6 +6,7 @@
+     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12" />
+     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
++    <PackageVersion Include="System.Text.Json" Version="8.0.4" />
+     <!-- Tests -->
+     <PackageVersion Include="coverlet.collector" Version="10.1.0" />
+     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.12" />
+diff --git a/src/TicketApi/TicketApi.csproj b/src/TicketApi/TicketApi.csproj
+index 32a94c4..742e61c 100644
+--- a/src/TicketApi/TicketApi.csproj
++++ b/src/TicketApi/TicketApi.csproj
+@@ -12,6 +12,7 @@
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>
+     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
++    <PackageReference Include="System.Text.Json" />
+   </ItemGroup>
+ 
+ </Project>

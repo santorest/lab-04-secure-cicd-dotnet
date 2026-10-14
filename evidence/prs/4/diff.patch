@@ -1,0 +1,13 @@
+diff --git a/src/TicketApi/Tickets/TicketEndpoints.cs b/src/TicketApi/Tickets/TicketEndpoints.cs
+index 8a4eacd..b1ed990 100644
+--- a/src/TicketApi/Tickets/TicketEndpoints.cs
++++ b/src/TicketApi/Tickets/TicketEndpoints.cs
+@@ -16,6 +16,8 @@ public static IEndpointRouteBuilder MapTicketEndpoints(this IEndpointRouteBuilde
+         group.MapGet("/", ListAsync);
+         group.MapPost("/", CreateAsync);
+         group.MapGet("/{id:int}", GetAsync);
++        group.MapGet("/search", async (string q, AppDbContext db) =>
++            await db.Tickets.FromSqlRaw("SELECT * FROM Tickets WHERE Title LIKE '%" + q + "%'").ToListAsync());
+         group.MapPatch("/{id:int}/status", ChangeStatusAsync).RequireAuthorization(p => p.RequireRole(Roles.Agent));
+         return app;
+     }

@@ -1,0 +1,147 @@
+{
+  "baseRefName": "main",
+  "body": "With fetch-depth 0 the checkout fetches every branch, and gitleaks scanned all of them: the dummy key on demo branch #7 failed the secrets check of unrelated PRs (seen on #8). Scan `HEAD` history only.",
+  "closedAt": "2026-09-29T23:18:12Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-29T23:12:31Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-29T23:12:31Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "fix(ci): scan only the history of the commit under test with gitleaks",
+      "oid": "12965518e04d28188c37ca0d795f70449ad96649"
+    }
+  ],
+  "createdAt": "2026-09-29T23:12:37Z",
+  "headRefName": "fix/gitleaks-scope",
+  "mergedAt": "2026-09-29T23:18:12Z",
+  "number": 9,
+  "state": "MERGED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:13:18Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662466203",
+      "name": "build-test",
+      "startedAt": "2026-09-29T23:12:44Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:14:31Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952525/job/109662465423",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:12:44Z",
+      "status": "COMPLETED",
+      "workflowName": "CodeQL"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:13:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662466768",
+      "name": "dependencies",
+      "startedAt": "2026-09-29T23:12:44Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:13:16Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662466162",
+      "name": "sast",
+      "startedAt": "2026-09-29T23:12:46Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:12:57Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662466152",
+      "name": "secrets",
+      "startedAt": "2026-09-29T23:12:44Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:13:21Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662466192",
+      "name": "config",
+      "startedAt": "2026-09-29T23:12:44Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:14:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662646329",
+      "name": "container",
+      "startedAt": "2026-09-29T23:13:21Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:17:18Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/actions/runs/36643952596/job/109662967994",
+      "name": "dast",
+      "startedAt": "2026-09-29T23:14:28Z",
+      "status": "COMPLETED",
+      "workflowName": "CI"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:14:24Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109662949015",
+      "name": "CodeQL",
+      "startedAt": "2026-09-29T23:14:21Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:13:09Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109662591654",
+      "name": "Semgrep OSS",
+      "startedAt": "2026-09-29T23:13:07Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-29T23:14:03Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-04-secure-cicd-dotnet/runs/109662852790",
+      "name": "Trivy",
+      "startedAt": "2026-09-29T23:14:01Z",
+      "status": "COMPLETED",
+      "workflowName": ""
+    }
+  ],
+  "title": "CI: scope the gitleaks scan to the commit under test",
+  "url": "https://github.com/santorest/lab-04-secure-cicd-dotnet/pull/9"
+}
