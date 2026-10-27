@@ -11,7 +11,7 @@ COPY src/ src/
 RUN dotnet publish src/TicketApi/TicketApi.csproj -c Release -o /app --no-restore && mkdir /data
 
 # checkov:skip=CKV_DOCKER_2: chiseled image has no shell or curl for a HEALTHCHECK; /health is probed from outside (EX-001)
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled@sha256:84def277556c2843a44fdeefbd3145d0a2e32d8f736d0c1a7b0a96b2880b0187
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled@sha256:c89a6a61f494f20a5ae302990e814627a8d91b332fd4a8e7c1707c2d4da9555d
 WORKDIR /app
 COPY --from=build /app .
 # The only writable path: the SQLite database. Run the container with --read-only.
